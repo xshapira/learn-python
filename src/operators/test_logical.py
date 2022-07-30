@@ -24,5 +24,5 @@ def test_logical_operators():
     # not
     # Reverse the result, returns False if the result is true.
     # pylint: disable=unneeded-not
-    assert not first_number == second_number
+    assert first_number != second_number
     assert first_number != second_number

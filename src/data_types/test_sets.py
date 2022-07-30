@@ -19,7 +19,7 @@ def test_sets():
 
     # It is also possible to use the set() constructor to make a set.
     # Note the double round-brackets
-    fruits_set_via_constructor = set(("apple", "banana", "cherry"))
+    fruits_set_via_constructor = {"apple", "banana", "cherry"}
 
     assert isinstance(fruits_set_via_constructor, set)
 

@@ -66,7 +66,7 @@ def test_function_definition():
     # Assign functions to variables.
 
     def greet(name):
-        return 'Hello, ' + name
+        return f'Hello, {name}'
 
     greet_someone = greet
 
@@ -86,7 +86,7 @@ def test_function_definition():
     # Functions can be passed as parameters to other functions.
 
     def greet_one_more(name):
-        return 'Hello, ' + name
+        return f'Hello, {name}'
 
     def call_func(func):
         other_name = 'John'
@@ -114,7 +114,7 @@ def test_function_definition():
 
     def compose_greet_func_with_closure(name):
         def get_message():
-            return 'Hello there, ' + name + '!'
+            return f'Hello there, {name}!'
 
         return get_message
 

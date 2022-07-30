@@ -16,8 +16,8 @@ def parrot(voltage, state='a stiff', action='voom', parrot_type='Norwegian Blue'
     """
 
     message = 'This parrot wouldn\'t ' + action + ' '
-    message += 'if you put ' + str(voltage) + ' volts through it. '
-    message += 'Lovely plumage, the ' + parrot_type + '. '
+    message += f'if you put {str(voltage)} volts through it. '
+    message += f'Lovely plumage, the {parrot_type}. '
     message += 'It\'s ' + state + '!'
 
     return message

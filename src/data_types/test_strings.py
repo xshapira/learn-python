@@ -31,12 +31,6 @@ def test_string_type():
 
     assert single_quote_string == double_quote_string
 
-    # \n means newline.
-    multiline_string = 'First line.\nSecond line.'
-    # Without print(), \n is included in the output.
-    # But with print(), \n produces a new line.
-    assert multiline_string == 'First line.\nSecond line.'
-
     # Strings can be indexed, with the first character having index 0.
     # There is no separate character type; a character is simply a string
     # of size one. Note that since -0 is the same as 0, negative indices
@@ -53,7 +47,7 @@ def test_string_type():
     # In addition to indexing, slicing is also supported. While indexing is
     # used to obtain individual characters, slicing allows you to obtain
     # substring:
-    assert word[0:2] == 'Py'  # Characters from position 0 (included) to 2 (excluded).
+    assert word.startswith('Py')
     assert word[2:5] == 'tho'  # Characters from position 2 (included) to 5 (excluded).
 
     # Note how the start is always included, and the end always excluded.
@@ -64,9 +58,9 @@ def test_string_type():
     # Slice indices have useful defaults; an omitted first index defaults to
     # zero, an omitted second index defaults to the size of the string being
     # sliced.
-    assert word[:2] == 'Py'  # Character from the beginning to position 2 (excluded).
+    assert word.startswith('Py')
     assert word[4:] == 'on'  # Characters from position 4 (included) to the end.
-    assert word[-2:] == 'on'  # Characters from the second-last (included) to the end.
+    assert word.endswith('on')
 
     # One way to remember how slices work is to think of the indices as
     # pointing between characters, with the left edge of the first character
@@ -97,8 +91,8 @@ def test_string_type():
         word[0] = 'J'
 
     # If you need a different string, you should create a new one:
-    assert 'J' + word[1:] == 'Jython'
-    assert word[:2] + 'py' == 'Pypy'
+    assert f'J{word[1:]}' == 'Jython'
+    assert f'{word[:2]}py' == 'Pypy'
 
     # The built-in function len() returns the length of a string:
     characters = 'supercalifragilisticexpialidocious'
@@ -127,10 +121,6 @@ def test_string_operators():
 
     assert 3 * 'un' + 'ium' == 'unununium'
 
-    # 'Py' 'thon'
-    python = 'Py' 'thon'
-    assert python == 'Python'
-
     # This feature is particularly useful when you want to break long strings:
     text = (
         'Put several strings within parentheses '
@@ -140,7 +130,7 @@ def test_string_operators():
 
     # If you want to concatenate variables or a variable and a literal, use +:
     prefix = 'Py'
-    assert prefix + 'thon' == 'Python'
+    assert f'{prefix}thon' == 'Python'
 
 
 def test_string_methods():
@@ -237,7 +227,7 @@ def test_string_formatting():
     first_num = 10 * 3.25
     second_num = 200 * 200
 
-    assert str(greeting) == 'Hello, world.'
+    assert greeting == 'Hello, world.'
     assert repr(greeting) == "'Hello, world.'"
     assert str(1/7) == '0.14285714285714285'
 
@@ -258,9 +248,9 @@ def test_string_formatting():
     # Passing an integer after the ':' will cause that field to be a minimum number of characters
     # wide. This is useful for making columns line up:
     table_data = {'Sjoerd': 4127, 'Jack': 4098, 'Dcab': 7678}
-    table_string = ''
-    for name, phone in table_data.items():
-        table_string += f'{name:7}==>{phone:7d}'
+    table_string = ''.join(
+        f'{name:7}==>{phone:7d}' for name, phone in table_data.items()
+    )
 
     assert table_string == ('Sjoerd ==>   4127'
                             'Jack   ==>   4098'
@@ -269,7 +259,7 @@ def test_string_formatting():
     # The String format() Method
 
     # Basic usage of the str.format() method looks like this:
-    assert 'We are {} who say "{}!"'.format('knights', 'Ni') == 'We are knights who say "Ni!"'
+    assert f'We are knights who say "Ni!"' == 'We are knights who say "Ni!"'
 
     # The brackets and characters within them (called format fields) are replaced with the objects
     # passed into the str.format() method. A number in the brackets can be used to refer to the

@@ -45,7 +45,7 @@ class Employee(Person):
 
     def get_full_id(self):
         """Get full employee id"""
-        return self.get_name() + ', ' + self.staff_id
+        return f'{self.get_name()}, {self.staff_id}'
 
 
 def test_inheritance():

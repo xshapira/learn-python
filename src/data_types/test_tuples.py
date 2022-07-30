@@ -31,7 +31,7 @@ def test_tuples():
     # It is also possible to use the tuple() constructor to make a tuple (note the double
     # round-brackets).
     # The len() function returns the length of the tuple.
-    fruits_tuple_via_constructor = tuple(("apple", "banana", "cherry"))
+    fruits_tuple_via_constructor = "apple", "banana", "cherry"
 
     assert isinstance(fruits_tuple_via_constructor, tuple)
     assert len(fruits_tuple_via_constructor) == 3
@@ -56,7 +56,7 @@ def test_tuples():
     # not sufficient to enclose a single value in parentheses). Ugly, but effective. For example:
     empty_tuple = ()
     # pylint: disable=len-as-condition
-    assert len(empty_tuple) == 0
+    assert not empty_tuple
 
     # pylint: disable=trailing-comma-tuple
     singleton_tuple = 'hello',  # <-- note trailing comma

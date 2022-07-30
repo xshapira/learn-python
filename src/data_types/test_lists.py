@@ -44,10 +44,7 @@ def test_list_type():
     cubes[3] = 64  # replace the wrong value
     assert cubes == [1, 8, 27, 64, 125]
 
-    # You can also add new items at the end of the list, by using
-    # the append() method
-    cubes.append(216)  # add the cube of 6
-    cubes.append(7 ** 3)  # and the cube of 7
+    cubes.extend((216, 7 ** 3))
     assert cubes == [1, 8, 27, 64, 125, 216, 343]
 
     # Assignment to slices is also possible, and this can even change the size
@@ -59,7 +56,7 @@ def test_list_type():
     assert letters == ['a', 'b', 'f', 'g']
     # clear the list by replacing all the elements with an empty list
     letters[:] = []
-    assert letters == []
+    assert not letters
 
     # The built-in function len() also applies to lists
     letters = ['a', 'b', 'c', 'd']
@@ -78,12 +75,18 @@ def test_list_type():
 def test_list_methods():
     """Test list methods."""
 
-    fruits = ['orange', 'apple', 'pear', 'banana', 'kiwi', 'apple', 'banana']
+    fruits = [
+        'orange',
+        'apple',
+        'pear',
+        'banana',
+        'kiwi',
+        'apple',
+        'banana',
+        'grape',
+    ]
 
-    # list.append(x)
-    # Add an item to the end of the list.
-    # Equivalent to a[len(a):] = [x].
-    fruits.append('grape')
+
     assert fruits == ['orange', 'apple', 'pear', 'banana', 'kiwi', 'apple', 'banana', 'grape']
 
     # list.remove(x)
@@ -167,7 +170,7 @@ def test_list_methods():
     # list.clear()
     # Remove all items from the list. Equivalent to del a[:].
     fruits.clear()
-    assert fruits == []
+    assert not fruits
 
 
 def test_del_statement():
@@ -188,14 +191,14 @@ def test_del_statement():
     assert numbers == [1, 66.25, 1234.5]
 
     del numbers[:]
-    assert numbers == []
+    assert not numbers
 
     # del can also be used to delete entire variables:
     del numbers
     with pytest.raises(Exception):
         # Referencing the name a hereafter is an error (at least until another
         # value is assigned to it).
-        assert numbers == []  # noqa: F821
+        assert not numbers
 
 
 def test_list_comprehensions():
@@ -212,10 +215,7 @@ def test_list_comprehensions():
     """
 
     # For example, assume we want to create a list of squares, like:
-    squares = []
-    for number in range(10):
-        squares.append(number ** 2)
-
+    squares = [number ** 2 for number in range(10)]
     assert squares == [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
 
     # Note that this creates (or overwrites) a variable named "number" that still exists after
@@ -234,9 +234,11 @@ def test_list_comprehensions():
     # and it’s equivalent to:
     combinations = []
     for first_number in [1, 2, 3]:
-        for second_number in [3, 1, 4]:
-            if first_number != second_number:
-                combinations.append((first_number, second_number))
+        combinations.extend(
+            (first_number, second_number)
+            for second_number in [3, 1, 4]
+            if first_number != second_number
+        )
 
     assert combinations == [(1, 3), (1, 4), (2, 3), (2, 1), (2, 4), (3, 1), (3, 4)]
 
@@ -301,10 +303,7 @@ def test_nested_list_comprehensions():
 
     # As we saw in the previous section, the nested listcomp is evaluated in the context of the
     # for that follows it, so this example is equivalent to:
-    transposed = []
-    for i in range(4):
-        transposed.append([row[i] for row in matrix])
-
+    transposed = [[row[i] for row in matrix] for i in range(4)]
     assert transposed == [
         [1, 5, 9],
         [2, 6, 10],
@@ -316,9 +315,7 @@ def test_nested_list_comprehensions():
     transposed = []
     for i in range(4):
         # the following 3 lines implement the nested listcomp
-        transposed_row = []
-        for row in matrix:
-            transposed_row.append(row[i])
+        transposed_row = [row[i] for row in matrix]
         transposed.append(transposed_row)
 
     assert transposed == [

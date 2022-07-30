@@ -18,7 +18,7 @@ def breakfast(ham: str, eggs: str = 'eggs') -> str:
 
     This function has a positional argument, a keyword argument, and the return value annotated.
     """
-    return ham + ' and ' + eggs
+    return f'{ham} and {eggs}'
 
 
 def test_function_annotations():

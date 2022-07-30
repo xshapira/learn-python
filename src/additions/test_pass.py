@@ -26,9 +26,7 @@ def test_pass_in_loop():
     """
 
     # pylint: disable=unused-variable
-    for number in range(100):
-        # It just don't do anything but for loop is still valid.
-        pass
+    pass
 
     # Example above is quite useless but it was given just for illustration of the idea.
     # The more useful example might be:
